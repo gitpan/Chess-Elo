@@ -25,7 +25,7 @@ our @EXPORT = qw(
 	
 );
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 
 # Preloaded methods go here.
@@ -75,16 +75,18 @@ Chess::Elo - Perl module to calculate Chess "Elo" ratings
 
   use Chess::Elo qw(:all);
 
-  my ($alice,      $bob)   = (2100, 1200);
-  my $result = 0; # alice lost to bob.. 0.5 == A draw B , 1 == A beat B
-  my @alice_bob            = elo_rating ($alice, 0, $bob);
-  use Data::Dumper; warn Dumper(\@alice_bob);
+  # Alice is going to thump Bob...
+  my ($alice_elo, $bob_elo) = (2100, 1200);
 
-  # My, Alice took a hit on her rating :)
-  # Bob is setting pretty 
+  # Oh no, Alice lost to Bob!
+  my $result = 0; # 0.5 for draw, 1 for win
+
+  my @new_elo_alice_bob = elo ($alice, 0, $bob);
+  use Data::Dumper; warn Dumper(\@new_elo_alice_bob);
+
   [
-          '2068.17894295388',
-          '1231.82105704612'
+          '2068.17894295388',   # My, Alice took a hit on her rating :)
+          '1231.82105704612'    # Bob is setting pretty 
   ];
              
 
@@ -100,7 +102,7 @@ of their encounter.
 
 The formula used is the same one used at magi-nation:
 
-    http://www.magi-nation.com/Tournaments/ratingsfaq.htm
+L<http://www.magi-nation.com/Tournaments/ratingsfaq.htm>
 
 Or, quantitatively speaking:
 
@@ -126,12 +128,12 @@ Or, quantitatively speaking:
 
 =head1 METHODS
 
-=head2 ($newA, $newB) = elo ( $current_elo_A, $result, $current_elo_B)
+=head2 ($new_a, $new_b) = elo($elo_a, $result, $elo_b)
 
 This function takes 3 arguments describing the result of a person with 
-rating A competing with the person with rating B. The result argument
-is from the perspective of person A, thus if A won $result is 1. If A
-lost, $result is 0. If A drew, $result is 0.5;
+rating C<$elo_a> competing with the person with rating C<$elo_b>. 
+The result argument is from the perspective of person A. Thus 
+if A won $result is 1. If A lost, $result is 0. If A drew, $result is 0.5.
 
 =head2 EXPORT
 
