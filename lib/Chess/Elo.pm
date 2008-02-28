@@ -1,10 +1,9 @@
 package Chess::Elo;
 
-use 5.008;
 use strict;
 use warnings;
 
-require Exporter;
+use Exporter;
 
 our @ISA = qw(Exporter);
 
@@ -25,7 +24,7 @@ our @EXPORT = qw(
 	
 );
 
-our $VERSION = '0.02';
+our $VERSION = '1.0a';
 
 
 # Preloaded methods go here.
@@ -100,11 +99,7 @@ In all cases, one gains and loses
 points as a function of the playing strength of both parties and the result
 of their encounter.
 
-The formula used is the same one used at magi-nation:
-
-L<http://www.magi-nation.com/Tournaments/ratingsfaq.htm>
-
-Or, quantitatively speaking:
+The formula used is:
 
     A2 = A1 + 32 (  G - ( 1 / ( 1 + 10 ** ( ( B1 -A1) / 400 ) ) ) )
 
@@ -143,6 +138,12 @@ None by default, C<elo> upon request.
 =head1 SEE ALSO
 
 =over
+
+=item * Christian Bartolomaeus' Elo rating module
+
+Christian's module L<Games::Ratings|Games::Ratings>
+provides a number of different rating methods, including
+the one used by FIDE.
 
 =item * The Perl Chess Mailing List:
 
